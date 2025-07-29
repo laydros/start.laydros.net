@@ -12,14 +12,14 @@ class StartpageThemeManager {
         const savedTheme = localStorage.getItem(this.storageKey) || 'original';
         this.setTheme(savedTheme);
 
-        // Add event listener to dropdown
-        const select = document.getElementById('theme-select');
-        if (select) {
-            select.addEventListener('change', (e) => {
-                const theme = e.target.value;
+        // Add event listener to theme buttons
+        const buttons = document.querySelectorAll('.theme-btn');
+        buttons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const theme = btn.dataset.theme;
                 this.setTheme(theme);
             });
-        }
+        });
 
         // Update active option state
         this.updateActiveButton();
@@ -35,10 +35,14 @@ class StartpageThemeManager {
     }
 
     updateActiveButton() {
-        const select = document.getElementById('theme-select');
-        if (select) {
-            select.value = this.currentTheme;
-        }
+        const buttons = document.querySelectorAll('.theme-btn');
+        buttons.forEach((btn) => {
+            if (btn.dataset.theme === this.currentTheme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
     }
 }
 
